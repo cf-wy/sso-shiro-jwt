@@ -1,0 +1,28 @@
+server:
+  port: 9888
+spring:
+  application:
+    name: sso-client-demo
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: LEGACYHTML5
+    encoding: utf-8
+#单点
+#sso:
+#  client-host-url: http://192.168.30.121:9888
+#  server-url-prefix: https://siiltxygii.login.aliyunidaas.com/enduser/api/application/cas_apereo/idaas-cn-mp91ghp0j02cas_apereo
+#  validation-url-prefix: https://siiltxygii.login.aliyunidaas.com/public/api/application/cas_apereo/idaas-cn-mp91ghp0j02cas_apereo
+#权限
+api:
+  psId: JutKRhGCyL
+  url-prefix: https://siiltxygii.api.aliyunidaas.com
+  accessToken-url: /oauth/token
+  permissions-url: /api/bff/v1.2/developer/ps/user_role_permissions
+  authorization-appKey: 1be3a57adc61c7e7de5f8e19f63b350dZt3tuE9FXys
+  authorization-appSecret: Uhdp6CDI30Kq8IAvXviBVXOYaxw6vdKmAcIqQrOkEV
+
+jwt:
+  publicKey: '{"kty":"RSA","kid":"6061664346884871186","alg":"RS256","n":"jEnrMcDV4QwcQpsAy5CkaZoeKW9OjnBH8jyjTalKlVy2UUBnx7MmkMDCO_hPh911Ed5SbWsyijfMjZYd-oIRzVQPKpk7t_IroT90_wq10jqFOjW6BSUcHuB4jJpbfMXTT1xOYVAJmt3QdhtebP10eYH5DLoRvNh-mHlJga_oc-QSOREozLcmrSM0gAKpm_yvVyeeaJW0Xs1y38ugfffzLr4X2HUFgQ8Nr9Ibkq4K67mqFj8pAej8V8w_UKKQSfdRkqiE7D-QAgjta3r-AF75DFSpkqQKnjEaN0a6DK21lx4I0-IX9lwSbU2bxuIJa7JV7TuoCaotESt3WZ_rGOyc3w","e":"AQAB"}'
+  login-url: https://siiltxygii.login.aliyunidaas.com/enduser/sp/sso/idaas-cn-mp91ghp0j02jwt1?enterpriseId=idaas-cn-mp91ghp0j02
