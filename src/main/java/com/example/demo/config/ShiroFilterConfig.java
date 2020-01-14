@@ -3,7 +3,6 @@ package com.example.demo.config;
 import com.example.demo.jwt.JwtFilter;
 import com.example.demo.realm.JwtRealm;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
-import org.apache.shiro.cas.CasSubjectFactory;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
@@ -27,7 +26,7 @@ public class ShiroFilterConfig {
     private String publicKey;
 
     @Bean(name = "shiroFilter")
-    public ShiroFilterFactoryBean getShiroFilterFactoryBean(SecurityManager securityManager,OSSConfigProperties ossConfigProperties) {
+    public ShiroFilterFactoryBean getShiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         // 必须设置 SecurityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
@@ -79,7 +78,7 @@ public class ShiroFilterConfig {
         /*realm.setCasService(ossConfigProperties.getClientHostUrl());
         realm.setCasServerUrlPrefix(ossConfigProperties.getValidationUrlPrefix());*/
         realm.setAuthorizationCacheName("authorizationCache");
-        realm.setCacheManager(cacheManager);
+        //realm.setCacheManager(cacheManager);
         return realm;
     }
     @Bean(name = "securityManager")
@@ -89,7 +88,7 @@ public class ShiroFilterConfig {
 //      <!-- 用户授权/认证信息Cache, 采用EhCache 缓存 -->
         dwsm.setCacheManager(getEhCacheManager());
         // 指定 SubjectFactory
-        dwsm.setSubjectFactory(new CasSubjectFactory());
+        //dwsm.setSubjectFactory(new CasSubjectFactory());
         return dwsm;
     }
 }
