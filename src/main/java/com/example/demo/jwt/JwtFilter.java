@@ -14,6 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 @Slf4j
 public class JwtFilter extends AuthenticatingFilter {
+    private String failureUrl;
+
+    public JwtFilter(String failureUrl) {
+        this.failureUrl = failureUrl;
+    }
+
     @Override
     protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) throws Exception {
         HttpServletRequest httpRequest= WebUtils.toHttp(request);
@@ -26,7 +32,17 @@ public class JwtFilter extends AuthenticatingFilter {
 
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-        return executeLogin(request, response);
+        Subject subject = getSubject(request, response);
+        if(subject.isAuthenticated()){
+            WebUtils.issueRedirect(request,response,getSuccessUrl());
+            return false;
+        }else {
+            return executeLogin(request, response);
+        }
+    }
+    @Override
+    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+        return false;
     }
 
     @Override
@@ -51,9 +67,9 @@ public class JwtFilter extends AuthenticatingFilter {
             }
         } else {
             try {
-                WebUtils.issueRedirect(request, response, "/error");
+                WebUtils.issueRedirect(request, response, failureUrl);
             } catch (IOException e2) {
-                log.error("Cannot redirect to failure url : {}", "/error", e2);
+                log.error("Cannot redirect to failure url : {}", failureUrl, e2);
             }
         }
         return false;

@@ -25,8 +25,8 @@ public class ShiroFilterConfig {
     @Value("${jwt.publicKey}")
     private String publicKey;
 
-    @Bean(name = "shiroFilter")
-    public ShiroFilterFactoryBean getShiroFilterFactoryBean(SecurityManager securityManager) {
+    @Bean
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         // 必须设置 SecurityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
@@ -43,7 +43,7 @@ public class ShiroFilterConfig {
         //casFilter.setFailureUrl("/");
         filters.put("casFilter", casFilter);
         filters.put("logout",logoutFilter);*/
-        filters.put("jwt",new JwtFilter());
+        filters.put("jwt",new JwtFilter(loginUrl));
         shiroFilterFactoryBean.setFilters(filters);
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(shiroFilterChainDefinition().getFilterChainMap());
@@ -56,7 +56,7 @@ public class ShiroFilterConfig {
         Map<String,String> paths=new LinkedHashMap<>();
         paths.put("/static/**","anon");
         paths.put("/403","anon");
-        paths.put("/jwt/**","jwt");
+        paths.put("/jwt","jwt");
         paths.put("/logout","logout");
         paths.put("/**","authc");
         chainDefinition.addPathDefinitions(paths);
